@@ -81,9 +81,14 @@ public class Swipe : MonoBehaviour
 
             }
 
+<<<<<<< HEAD
         }
         else 
         {
+=======
+            float force = swipeLength / 100;
+            finalForce = Mathf.Clamp(force, 1, 8);
+>>>>>>> eaf3d47352330adbc279297c76b19764e60d1c76
 
             Input.gyro.enabled = true;
             tiltAngle = -Input.gyro.attitude.z;
