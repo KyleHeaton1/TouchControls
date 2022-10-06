@@ -15,11 +15,15 @@ public class Swipe : MonoBehaviour
 
     public float swipeLength;
     public float finalForce;
+    [Range(-1,1)]
+    public float tiltAngle;
+
     public float gravity = -9.8f;
 
     public int scoreCounter;
 
     public bool isDead;
+
 
     //gets screen positions for both start and end of swipe
     private Vector2 startTouchPosition;
@@ -49,35 +53,56 @@ public class Swipe : MonoBehaviour
             return;
         }
 
-
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)// checks if its the first touch 
+        if(gameManager.isSwipe == true)
         {
-            startTouchPosition = Input.GetTouch(0).position; //sets the vector2 as the initial touch position 
-            swipeLength = 0;
-        }
-
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) // checks the last position touched
-        {
-            endTouchPosition = Input.GetTouch(0).position; //sets the vector2 as the last touched position
-            finalMagnitude = startTouchPosition - endTouchPosition;
-            swipeLength = finalMagnitude.magnitude;
-
-            finalForce = swipeLength / 100;
-            Mathf.Clamp(finalForce, 0, 10);
-
-            if(endTouchPosition.y > startTouchPosition.y) // checks if end position is positive
+            if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)// checks if its the first touch 
             {
-                SwipeUp(); //calls the actual up swiping function
-            }
-            if(endTouchPosition.y < startTouchPosition.y) //checks if the end position is negative
-            {
-                SwipeDown(); //calls the actual down swiping function
+                startTouchPosition = Input.GetTouch(0).position; //sets the vector2 as the initial touch position 
+                swipeLength = 0;
             }
 
+            if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) // checks the last position touched
+            {
+                endTouchPosition = Input.GetTouch(0).position; //sets the vector2 as the last touched position
+                finalMagnitude = startTouchPosition - endTouchPosition;
+                swipeLength = finalMagnitude.magnitude;
+
+                float force = swipeLength / 100;
+                finalForce = Mathf.Clamp(force, 1, 8);
+
+                if(endTouchPosition.y > startTouchPosition.y) // checks if end position is positive
+                {
+                    SwipeUp(); //calls the actual up swiping function
+                }
+                if(endTouchPosition.y < startTouchPosition.y) //checks if the end position is negative
+                {
+                    SwipeDown(); //calls the actual down swiping function
+                }
+
+            }
+
+        }
+        else 
+        {
+
+            Input.gyro.enabled = true;
+            tiltAngle = -Input.gyro.attitude.z;
+            
+            if(tiltAngle <= 1 && tiltAngle > 0)
+            {
+                direction = Vector3.up * tiltAngle;
+
+            }
+            else if(tiltAngle <= -1 && tiltAngle < 0)
+            {
+                direction = Vector3.down * tiltAngle;
+
+            }
         }
 
-        
-            direction.y += gravity * Time.deltaTime;
+
+
+        direction.y += gravity * Time.deltaTime;
             transform.position += direction * Time.deltaTime;
 
     }
@@ -91,8 +116,7 @@ public class Swipe : MonoBehaviour
             gameManager.isFinished = true;
             animator.enabled = false;
             isDead = true;
-        }
-
+        } 
 
     }
 

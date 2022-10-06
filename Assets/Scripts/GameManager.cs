@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public bool isStarted;
     public bool isFinished;
 
+    public bool isSwipe;
+
     public GameObject gameOver;
     public GameObject playAgain;
     public GameObject playAgainButton;

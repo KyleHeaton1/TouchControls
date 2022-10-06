@@ -1187,6 +1187,8 @@ MonoBehaviour:
   confeti: {fileID: 0}
   swipeLength: 0
   finalForce: 0
+  tiltAngle: 1
+  speed: 0
   gravity: -9.8
   scoreCounter: 0
   isDead: 0
@@ -1441,6 +1443,7 @@ MonoBehaviour:
   swipe: {fileID: 0}
   isStarted: 0
   isFinished: 0
+  isSwipe: 0
   gameOver: {fileID: 1184679378}
   playAgain: {fileID: 1196571618}
   playAgainButton: {fileID: 1935941046}
