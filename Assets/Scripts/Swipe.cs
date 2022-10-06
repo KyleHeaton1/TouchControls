@@ -62,8 +62,8 @@ public class Swipe : MonoBehaviour
             finalMagnitude = startTouchPosition - endTouchPosition;
             swipeLength = finalMagnitude.magnitude;
 
-            finalForce = swipeLength / 100;
-            Mathf.Clamp(finalForce, 0, 10);
+            float force = swipeLength / 100;
+            finalForce = Mathf.Clamp(force, 1, 8);
 
             if(endTouchPosition.y > startTouchPosition.y) // checks if end position is positive
             {
