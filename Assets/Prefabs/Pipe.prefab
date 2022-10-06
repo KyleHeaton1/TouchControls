@@ -33,7 +33,7 @@ Transform:
   - {fileID: 2508608134550362034}
   - {fileID: 351697745650331299}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5699975284065849632
 MonoBehaviour:
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0ade42c488feb49adf837c3ddd13f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swipe: {fileID: 0}
   pipeMoveSpeed: 5
 --- !u!1 &5754962384794149017
 GameObject:
@@ -61,7 +62,7 @@ GameObject:
   - component: {fileID: 8683235439494245893}
   m_Layer: 0
   m_Name: Bottom
-  m_TagString: Untagged
+  m_TagString: Obstacles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,7 +172,7 @@ GameObject:
   - component: {fileID: 7512190868611515440}
   m_Layer: 0
   m_Name: ScoreTrigger
-  m_TagString: Untagged
+  m_TagString: Score
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6118191530125921550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.27, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -228,9 +229,9 @@ GameObject:
   - component: {fileID: 6610399651385862633}
   - component: {fileID: 8128995910511395404}
   - component: {fileID: 2844187123994122041}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top
-  m_TagString: Untagged
+  m_TagString: Obstacles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

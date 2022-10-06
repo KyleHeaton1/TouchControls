@@ -11,6 +11,8 @@ public class PipeSpawner : MonoBehaviour
     public float pipeMinSpawnHeight = -1f;
     public float pipeMaxSpawnHeight = 1f;
 
+    public GameManager gameManager;
+
     private void OnEnable() 
     {
         InvokeRepeating(nameof(Spawn), pipeSpawnRate, pipeSpawnRate);

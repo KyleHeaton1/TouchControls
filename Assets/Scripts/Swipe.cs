@@ -6,10 +6,20 @@ public class Swipe : MonoBehaviour
 {
 
     public Rigidbody2D playerRigidbody;
+    public CircleCollider2D circleCollider;
+
+    public GameManager gameManager;
+    public Animator animator;
+
+    public ParticleSystem confeti;
 
     public float swipeLength;
     public float finalForce;
     public float gravity = -9.8f;
+
+    public int scoreCounter;
+
+    public bool isDead;
 
     //gets screen positions for both start and end of swipe
     private Vector2 startTouchPosition;
@@ -18,8 +28,28 @@ public class Swipe : MonoBehaviour
 
     private Vector3 direction;
 
+    private void Awake()
+    {
+        confeti = GetComponentInChildren<ParticleSystem>();
+        playerRigidbody.isKinematic = true;
+        circleCollider.isTrigger = true;
+        animator.enabled = true;
+        scoreCounter = 0;
+    }
+
     void Update()
     {
+        if(gameManager.isStarted == false)
+        {
+            return;
+        } 
+
+        if(gameManager.isFinished == true)
+        {
+            return;
+        }
+
+
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)// checks if its the first touch 
         {
             startTouchPosition = Input.GetTouch(0).position; //sets the vector2 as the initial touch position 
@@ -32,14 +62,8 @@ public class Swipe : MonoBehaviour
             finalMagnitude = startTouchPosition - endTouchPosition;
             swipeLength = finalMagnitude.magnitude;
 
-            if(swipeLength <= 500)
-            {
-                finalForce = 6;
-            }
-            else if( swipeLength > 500)
-            {
-                finalForce = 8;
-            }
+            finalForce = swipeLength / 100;
+            Mathf.Clamp(finalForce, 0, 10);
 
             if(endTouchPosition.y > startTouchPosition.y) // checks if end position is positive
             {
@@ -49,11 +73,36 @@ public class Swipe : MonoBehaviour
             {
                 SwipeDown(); //calls the actual down swiping function
             }
+
+        }
+
+        
+            direction.y += gravity * Time.deltaTime;
+            transform.position += direction * Time.deltaTime;
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Obstacles"))
+        {
+            playerRigidbody.isKinematic = false;
+            circleCollider.isTrigger = false;
+            gameManager.isFinished = true;
+            animator.enabled = false;
+            isDead = true;
         }
 
 
-        direction.y += gravity * Time.deltaTime;
-        transform.position += direction * Time.deltaTime;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Score"))
+        {
+            scoreCounter++;
+            confeti.Play();
+        }
     }
 
     void SwipeUp()
@@ -67,4 +116,6 @@ public class Swipe : MonoBehaviour
         direction = Vector3.down * finalForce;
         Debug.Log("flap down");
     }
+
+
 }
